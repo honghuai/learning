@@ -1,0 +1,98 @@
+body{
+  line-height:1.4;
+  color:#333;
+  font-family:arial;
+  font-size: 12px;
+  background:white;
+}
+input,textarea,select{
+  font-size:12px;
+  font-size:100%;
+  font-family:arial;
+  font-family:inherit;
+}
+body,h1,h2,h3,h4,h5,h6,p,ul,ol,form{
+  margin:0;
+}
+h4,h5,h6{
+  font-size:1em;
+}
+ul,ol{
+  padding-left:0;
+  list-style-type:none;
+}
+a img{
+  border:0;
+}
+img{
+  border:0;
+}
+
+.window_boundingBox{
+  position: fixed;
+  border:1px solid #000;
+  left: 50%;
+  top: 100px;
+  box-shadow: 0 0 12px rgba(0,0,0,.5);
+  background-color: #fff;
+}
+.window_boundingBox .boundingOk,.window_boundingBox .window_confirmBtn,.window_boundingBox .window_promptBtn{
+  cursor: pointer;
+  position: absolute;
+  left:210px;
+  bottom:20px;
+  width: 80px;
+  height: 30px;
+}
+.window_boundingBox .boundingCancel,.window_boundingBox .window_cancelBtn{
+  cursor: pointer;
+  position: absolute;
+  left:310px;
+  bottom:20px;
+  width: 80px;
+  height: 30px;
+}
+.window_boundingBox .window_header{
+  text-align: center;
+  font-size: 24px;
+  color:red;
+  background-color: #ccc;
+}
+.window_closeBtn{
+  position: absolute;
+  right:10px;
+  top:5px;
+  font-size: 24px;
+  cursor:pointer;
+}
+.window_closeBtn:hover{
+  color: red;
+}
+.window_boundingBox .boundingCn{
+  height: 30px;
+  font-size: 18px;
+  color: #ccc;
+}
+html,body{
+  height: 100%;
+}
+.window_mask{
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+  background-color: rgba(0,0,0,0.5);
+
+}
+/*skinClassName_a:skin for a*/
+.skinClassName_a .window_header{
+  text-align: center;
+  font-size: 24px;
+  color:#fff;
+  background-color: orange;
+}
+.skinClassName_a .boundingOk{
+  color: #fff;
+  background-color: orange;
+}
