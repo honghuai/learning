@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="../lib/bootstrap/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/search.css">
+
+    <script src="../lib/jquery-1.11.3.min.js"></script>
+    <script src="../lib/bootstrap/bootstrap.min.js"></script>
+
+</head>
+<body>
+<div class="wrap" id="app">
+    <search :searchmsg.sync="searchmsg"></search>
+    <main-table :titleData="titleData" :maindata_fan="mainData_honghuai" :searchmsg.sync="searchmsg"></main-table>
+    <dialog :createdata_FAN="createData" :maindata_fan="mainData_honghuai" :show.sync="show" :persons.sync="persons"></dialog>
+    <create :show.sync="show"></create>
+</div>
+<template id="J_search">
+    <div class="input-group input-group-lg">
+        <input type="text" class="form-control" placeholder="关键字" aria-decribedby="sizing-addon1" v-model="searchmsg">
+        <span class="input-group-addon" id="sizing-addon1">搜索</span>
+    </div>
+</template>
+
+<template id="J_table">
+    <table class="table table-hover table-bordered table-striped">
+        <thead>
+        <tr>
+            <th v-for="col in titleData">{{col}}</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr v-for="(index,lists) in maindata_FAN |filterBy searchmsg">
+            <td v-for="list in lists">{{list}}</td>
+            <td class="handle">
+                <button class="btn btn-danger" @click="deletePerson(index)">删除</button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</template>
+<template id="J_dialog">
+    <div class="alldialogs" :class="{'dialog-active':show}">
+        <div class="dialogbg" @click="close"></div>
+        <div class="dialogs">
+            <h3>新建</h3>
+            <div class="input-group input-group-lg">
+                <span class="input-group-addon">姓名</span>
+                <input type="text" class="form-control" placeholder="{{createdata_Fan.name}}" v-model="name">
+            </div>
+            <div class="input-group input-group-lg">
+                <span class="input-group-addon">年龄</span>
+                <input type="text" class="form-control" placeholder="{{createdata_Fan.age}}" v-model="age">
+            </div>
+            <div class="input-group input-group-lg">
+                <span class="input-group-addon">性别</span>
+                <select name="" id="" class="form-control dropdown-menu" v-model="sex">
+                    <option v-for="sex in createdata_Fan.sex">{{sex}}</option>
+                </select>
+            </div>
+            <button class="btn btn-success dialognew" @click="save">保存</button>
+            <button class="btn btn-success dialognew" @click="close">关闭</button>
+        </div>
+
+
+    </div>
+</template>
+
+
+<template id="J_create">
+    <button class="btn btn-success" @click="create">CREATE</button>
+</template>
+
+
+</body>
+<script src="../lib/vue.js"></script>
+<script>
+    Vue.component("search",{
+        template: "#J_search",
+        props: ["searchmsg"]
+    })
+
+
+    Vue.component("main-table", {
+        template: "#J_table",
+        props: ["titledata", "maindata_FAN", "searchmsg", "show", "persons"],
+        methods: {
+            deletePerson: function (index, person) {
+                console.log(index);
+                console.log(person);
+                this.maindata_FAN.splice(index, 1);
+            }
+        }
+    })
+    Vue.component("create",{
+        template: "#J_create",
+        props: ["show"],
+        methods: {
+            create: function() {
+                this.show = false;
+            }
+        }
+    })
+    Vue.component("dialog",{
+        template: "#J_dialog",
+        props: ["maindata_FAN","createdata_Fan","show","persons"],
+        data: function(){
+            return {
+                name: this.persons.name,
+                age: this.persons.age,
+                sex: this.persons.sex
+            }
+        },
+        methods:{
+            save:function(){
+                this.persons.all = {
+                    name: this.name,
+                    age: this.age,
+                    sex: this.sex
+                }
+                console.log(this.persons.all);
+                this.maindata_FAN.push(this.persons.all);
+                this.show = true;
+            },
+            close: function() {
+                this.show = true;
+            }
+        }
+    })
+new Vue({
+    el: "#app",
+    data: {
+        show: false,
+        searchmsg: "",
+        persons:{
+            name: "",
+            age: "",
+            sex: "",
+            all: {}
+        },
+        titleData: ["用户名","年龄","性别","操作"],
+        mainData_honghuai: [{
+            name: "honghuai",
+            age: 12,
+            sex: "男"
+        },{
+            name: "fan",
+            age: 13,
+            sex: "女"
+        }],
+        createData: {
+            name: "this your name",
+            age: "this your age",
+            sex: ["男","女"]
+        }
+    }
+})
+</script>
+</html>

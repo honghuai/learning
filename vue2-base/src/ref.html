@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ref</title>
+</head>
+<body>
+<div id="app">
+    <p>{{searchmsg}}</p>
+    <input type="text" ref="input_name">
+    <input type="text" ref="input">
+    <p ref="tag_p">这是一个P标签</p>
+    <input type="button" value="触发" @click="lookref">
+
+    <br/>
+
+    <input type="text" v-model="sth">
+    <input type="text" v-bind:value="sth" ref="pwd" v-on:input="sth=$event.target.value">
+    <input type="button" value="查看v-ind:value绑定的数据" @click="lookrefValue">
+
+</div>
+</body>
+<script src="../lib/vue2.1.3.js"></script>
+<script>
+    /**
+     * ref被用来给元素或子组件注册引用信息。引用信息会根据傅祖建的$refs对象进行注册。
+     * 如果在普通的DOM元素上使用，引用信息就是元素
+     * 如果用在子组件上，引用信息就是组件实例
+     * */
+    new Vue({
+        el: "#app",
+        data: {
+            searchmsg: "搜索信息",
+            sth: "xx"
+        },
+        methods: {
+            lookref: function() {
+                console.log(this.$refs.tag_p);
+                console.log(this.$refs.input.value);
+                console.log(this.$refs.input_name.value);
+            },
+            lookrefValue: function() {
+                console.log(this.$refs.pwd.value);
+            }
+        }
+    })
+</script>
+</html>

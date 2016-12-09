@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>具名slot</title>
+</head>
+<body>
+<div id="app">
+<app-layout>
+    <h1 slot="header">here might be a page title</h1>
+    <h3>a paragraph for the main content.</h3>
+    <h3>and another one.</h3>
+    <p slot="footer">here is some contact info</p>
+</app-layout>
+</div>
+<template id="J_layout">
+    <div class="container">
+        <header>
+            <slot name="header"></slot>
+        </header>
+        <main>
+            <slot></slot>
+        </main>
+        <footer>
+            <slot name="footer"></slot>
+        </footer>
+    </div>
+</template>
+</body>
+<script src="../lib/vue2.1.3.js"></script>
+<script>
+    /**
+     * 在组合组件时，内容分发 API 是非常有用的机制。
+     * 有一个匿名 slot ，它是默认 slot ，作为找不到匹配的内容片段的备用插槽。如果没有默认的 slot ，这些找不到匹配的内容片段将被抛弃。
+     * 如上述的2个h3标签没有指定具体的slot，会默认插入并代替J_layout模板中的空slot标签
+     * */
+new Vue({
+    el: "#app",
+    components: {
+        "app-layout": {
+            template: "#J_layout"
+        }
+    }
+})
+</script>
+</html>

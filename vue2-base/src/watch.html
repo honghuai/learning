@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>watch与deep</title>
+</head>
+<body>
+<form id="app">
+    <p>{{info.msg}}</p>
+
+    <p>{{info.name}}</p>
+    <button @click.prevent="changeIt">触发</button>
+    <p>疑惑：此处的$data居然load不出json格式的字符，见form.html是能正常显示的，待解决。
+        <pre>data: {{$data}}
+        </pre>
+    </p>
+    <br/>
+    <p>
+        {{anotherInfo.sex}}
+    </p>
+
+</form>
+</body>
+<script src="../lib/vue.js"></script>
+<script>
+/**
+ * @click.prevent="changeIt"与
+ * @click="changeIt"的区别
+ * 加prevent是为了防止点击form重刷新
+ * */
+    var vm = new Vue({
+        el: "#app",
+        data: {
+            info: {
+                msg: 1,
+                name: "honghuai"
+            },
+            anotherInfo: {
+                age:11,
+                sex: "male"
+            }
+        },
+        methods: {
+            changeIt: function () {
+                this.info.msg = "改变的info值";
+                this.info.name = "改变的name值";
+
+                this.anotherInfo.sex = "female";
+                this.anotherInfo.name = "honghuai";
+            }
+        },
+        watch: {
+            /*   "info.msg": function (newV1, oldV2) {
+             //                unwatch();
+
+             console.log(newV1, oldV2);//改变的新值 1
+             this.info.msg = "直接在Vue里的写入的msg值";
+             this.info.name = "直接在Vue里的写入的name值";
+             },
+             "info.name": function(newV1,newV2) {
+             console.log(newV1,newV2);
+             },*/
+            "anotherInfo": function (newV1, oldV2) {
+                console.log(newV1, oldV2);
+            }
+        }
+    })
+
+
+
+    vm.$watch("info.msg", function (v1, v2) {
+        console.log(v1, v2);//直接在Vue里的写入的值 1
+        this.info.msg = "vm.$watch写入的msg值";
+    })
+
+    vm.$watch("info.name", function (v1, v2) {
+        console.log(v1, v2);//直接在Vue里的写入的值 1
+
+        this.info.name = "vm.$watch写入的name值";
+    })
+
+    vm.$watch("anotherInfo",function(v){
+        console.log("年龄："+v.age + "   性别："+v.sex);
+    },{
+        immediate: true,//在选项参数中指定 immediate: true 将立即以表达式的当前值触发回调：
+        deep: true//为了发现对象内部值的变化，可以在选项参数中指定 deep: true 。注意监听数组的变动不需要这么做。
+    });
+    /*同时使用的情况下，旧址都是指向Vue里默认的初始值，共享一个旧址。但新值赋值至上而下会更新到*/
+
+    /**
+     * 疑惑：http://cn.vuejs.org/v2/api/#vm-watch
+     * // 函数
+     vm.$watch(
+     function () {
+    return this.a + this.b
+  },
+     function (newVal, oldVal) {
+    // 做点什么
+  }
+     )
+     vm.$watch 返回一个取消观察函数，用来停止触发回调：
+
+     var unwatch = vm.$watch('a', cb)
+     // 之后取消观察
+     unwatch()
+     * */
+    var ifServer = vm.$isServer;
+    console.log(ifServer);//本地服务直接看到实验结果是undefined，不知道所谓的服务端渲染是不是跟这个isServer有关系，暂时不知道怎么测试服务端
+</script>
+</html>

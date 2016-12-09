@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>getter和setter</title>
+</head>
+<style>
+    .hidden{
+        display: none;
+    }
+    .red{
+        color: red;
+    }
+</style>
+<body>
+<div id="app">
+    {{xx}}-{{yy.aa}}-{{yy.bb}}
+    <ol>
+        <li v-for="list in lists">{{list}}</li>
+    </ol>
+    <ol>
+        <li v-for="list in listsObj">{{list.name}}</li>
+    </ol>
+
+    {{fullName}}
+    <button :class="{'hidden':show,'red': isred}">这是要消失的按钮</button>
+    <button @click="changeIt">触发</button>
+
+</div>
+</body>
+<script src="../lib/vue.js"></script>
+<script>
+    /**
+     * 计算属性默认只有 getter ，不过在需要时你也可以提供一个 setter
+     * */
+    var vm = new Vue({
+        el: "#app",
+        data: {
+            fullName: "fanhonghuai",
+            firstName: "liu",
+            familyName: "changqing",
+            show: false,
+            lists: [
+                    "年轻","活力","热情"
+            ],
+            listsObj: [{
+                name: "fan",
+                age: 11
+            },{
+                name: "hong",
+                age: 12
+            }]
+        },
+        computed: {
+            fullName: {
+                get:function() {
+                    return this.firstName + " " + this.familyName;
+                },
+                set: function(newValue) {
+                    console.log(newValue);//hu ge weilian
+                    var names = newValue.split(" ");
+                    this.firstName = names[0] + "==";
+                    this.familyName = names[names.length - 1];
+                }
+            }
+        },
+        methods: {
+            changeIt: function(){
+                this.fullName = "hu ge weilian";
+                this.show = true;
+                this.isred = true;
+//                Vue.set(vm,"yy",{bb:"活泼"});//不适用assign合并数组方法，就会使得yy完全变成只有{bb:"活泼"}属性的对象
+                this.yy = Object.assign({},this.yy,{
+                    bb:123
+                })
+
+                console.log(this.$data)
+            }
+        }
+    })
+    /**
+     * 可以使用 Vue.set(object, key, value) 方法将响应属性添加到嵌套的对象上
+     * */
+    Vue.set(vm,"xx","放浪");
+    Vue.set(vm,"yy",{aa:"奔放"});
+
+</script>
+</html>

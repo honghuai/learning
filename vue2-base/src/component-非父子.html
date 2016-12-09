@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>非父子组件通信</title>
+</head>
+<body>
+<div id="app">
+    <my-component1></my-component1>
+    <my-component2></my-component2>
+    <my-component3></my-component3>
+
+</div>
+<template id="J_component1">
+    <div>
+        <button>组件1</button>
+    </div>
+</template>
+
+<template id="J_component2">
+    <div>
+        <button>组件2</button>
+    </div>
+</template>
+
+<template id="J_component3">
+    <div>
+        <button @click="toSelect">组件3</button>
+    </div>
+</template>
+</body>
+<script src="../lib/vue2.1.3.js"></script>
+<script>
+    var bus = new Vue();
+    new Vue({
+        el: "#app",
+        components: {
+            "my-component1": {template: "#J_component1"},
+            "my-component2": {template: "#J_component2",mounted: function() {
+                console.log("在组件 2 创建的钩子中监听事件");
+                bus.$on("toSelect2",function(id){
+                    console.log(id);
+                })
+            }},
+            "my-component3": {template: "#J_component3",methods: {toSelect: function() {
+                console.log("触发组件 3 中的事件");
+                bus.$emit("toSelect2",1);
+
+            }}}
+        }
+    })
+</script>
+</html>
