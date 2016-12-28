@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>props设置default默认值</title>
+</head>
+<body>
+<div id="app">
+    {{price}}
+    <search :price="price"></search>
+    <search price="价格price"></search>
+</div>
+
+<template id="J_search">
+    <p>
+        template外层必须有一个标签包住.{{price}}
+    </p>
+</template>
+</body>
+<script src="../lib/vue2.1.3.js"></script>
+<script>
+    Vue.component("search",{
+        template: "#J_search",
+        props: {
+            price: {
+                type: Number,
+                default: 1122
+            }
+        }
+    })
+    new Vue({
+        el: "#app",
+        data: {
+//            price: 0.001
+        }
+    })
+
+</script>
+</html>

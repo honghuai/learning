@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>transition-初始渲染的过渡</title>
+    <link href="https://unpkg.com/animate.css@3.5.1/animate.min.css" rel="stylesheet" type="text/css">
+
+</head>
+<body>
+<div id="app">
+    <button @click="show = !show">toggle</button>
+    <transition
+                appear
+                v-on:before-appear="customBeforeAppearHook"
+                v-on:appear="customAppearHook"
+                v-on:after-appear="customAfterAppearHook"
+
+                v-on:before-enter = "beforeEnter"
+                v-on:enter = "enter"
+                v-on:after-enter="afterEnter"
+                v-on:enter-cancelled="enterCancelled"
+
+                v-on:before-leave="beforeLeave"
+                v-on:leave="leave"
+                v-on:after-leave="afterLeave"
+                v-on:leave-cancelled="leaveCancelled"
+    >
+        <p v-if="show">js钩子</p>
+    </transition>
+</div>
+</body>
+<script src="../../lib/vue2.1.3.js"></script>
+<script>
+    /**
+     * enter/leave的done();都要放出来执行，不然无法实现show的显示与隐藏
+     * 通过 appear 特性设置节点的在初始渲染的过渡.即初始化界面的时候就会执行的动画
+     * */
+    new Vue({
+        el: "#app",
+        data: {
+            show: true
+        },
+        methods: {
+            customBeforeAppearHook: function(el) {
+                console.log(el);
+                el.className = "animated tada";
+
+                console.log("customBeforeAppearHook");
+            },
+            customAppearHook: function() {
+                console.log("customAppearHook");
+            },
+            customAfterAppearHook: function() {
+                console.log("customAfterAppearHook");
+            },
+
+
+
+            beforeEnter: function(el) {
+                console.log(el);
+                console.log("beforeEnter");
+            },
+            enter: function(el,done) {
+                done();
+                console.log("enter");
+            },
+            afterEnter: function() {
+                console.log("afterEnter");
+            },
+            enterCancelled: function() {
+                console.log("enterCancelled");
+            },
+            beforeLeave: function() {
+                console.log("beforeLeave");
+            },
+            leave: function(el,done) {
+                done();
+                console.log("leave");
+            },
+            afterLeave: function() {
+                console.log("afterLeave");
+            },
+            leaveCancelled: function() {
+                console.log("leaveCancelled");
+            }
+        }
+    })
+</script>
+</html>

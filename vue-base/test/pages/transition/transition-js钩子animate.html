@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>transition-js钩子</title>
+</head>
+<link href="https://unpkg.com/animate.css@3.5.1/animate.min.css" rel="stylesheet" type="text/css">
+
+<body>
+<div id="app">
+    <button @click="show = !show">toggle</button>
+    <transition v-on:before-enter = "beforeEnter"
+        v-on:enter = "enter"
+        v-on:after-enter="afterEnter"
+        v-on:enter-cancelled="enterCancelled"
+
+        v-on:before-leave="beforeLeave"
+        v-on:leave="leave"
+        v-on:after-leave="afterLeave"
+        v-on:leave-cancelled="leaveCancelled"
+    >
+        <p v-if="show">js钩子</p>
+    </transition>
+</div>
+</body>
+<script src="../../lib/vue2.1.3.js"></script>
+<script>
+    /**
+     * 当只用 JavaScript 过渡的时候， 在 enter 和 leave 中，回调函数 done 是必须的 。 否则，它们会被同步调用，过渡会立即完成。
+     * */
+    new Vue({
+        el: "#app",
+        data: {
+          show: true
+        },
+        methods: {
+            beforeEnter: function(el) {
+                console.log(el);
+                console.log("beforeEnter");
+            },
+            enter: function(el,done) {
+                el.className = "animated tada";
+//                done();
+                console.log("enter");
+            },
+            afterEnter: function() {
+                console.log("afterEnter");
+            },
+            enterCancelled: function() {
+                console.log("enterCancelled");
+            },
+            beforeLeave: function() {
+                console.log("beforeLeave");
+            },
+            leave: function(el,done) {
+                el.className = "animated bounceOutRight";
+//                done();
+                console.log("leave");
+            },
+            afterLeave: function() {
+                console.log("afterLeave");
+            },
+            leaveCancelled: function() {
+                console.log("leaveCancelled");
+            }
+        }
+    })
+</script>
+</html>

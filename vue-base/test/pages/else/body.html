@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>vue放在body</title>
+</head>
+<body>
+{{msg}}
+</body>
+<script src="../../lib/vue2.1.3.js"></script>
+<script>
+    /**
+     * vue2特点：vue2.1.3.js:515 [Vue warn]: Do not mount Vue to <html> or <body> - mount to normal elements instead.
+     * */
+    new Vue({
+        el: "body",
+        data: {
+            msg: "this is message"
+        }
+    })
+</script>
+</html>

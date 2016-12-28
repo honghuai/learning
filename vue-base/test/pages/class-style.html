@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>class和style</title>
+</head>
+<style>
+    .hidden{
+        display: none;
+    }
+    .red{
+        color: red;
+    }
+    .redBorder{
+        border:1px solid red;
+    }
+    .boxShadow{
+        box-shadow: 2px 3px 3px #1b6d85;
+    }
+    .classA{
+        color: orange;
+    }
+    .classB{
+        border:1px solid blue;
+    }
+    .classC{
+        background-color: green;
+    }
+</style>
+<body>
+<div id="app">
+    <my-component :isred="isred" :class="{red: isred}"></my-component>
+    <button :class="{'hidden':show,'red': isred}">这是要消失的按钮</button>
+    <button v-bind:class="clsobj">对象类型样式</button>
+    <button :class="[clsA,clsB]">数组形式样式</button>
+    <button :class="[clsA,{'classC':isC}]">数组语法与对象与法混用</button>
+    <button :class="classObj">class对象样式-computed</button>
+
+
+    <button @click="changeClass">触发class绑定</button>
+
+    <br/>
+    <br/>
+
+    <button :style="{color: activeColor,fontSize: fontSize +'px'}">STYLE样式</button>
+    <button :style="styleObj">STYLE对象样式</button>
+    <button :style="[styleA,styleB]">STYLE对象样式</button>
+    <button @click="changeStyle">触发style绑定</button>
+
+</div>
+<template id="J_Mycomponent">
+    <p class="classB">
+        like apple {{isred}}
+    </p>
+</template>
+</body>
+<script src="../lib/vue2.1.3.js"></script>
+<script>
+    /**
+     * 当 v-bind:style 使用需要特定前缀的 CSS 属性时，如 transform ，Vue.js 会自动侦测并添加相应的前缀。
+     * */
+    Vue.component("my-component",{
+        template: "#J_Mycomponent",
+        props: ["isred"]
+    })
+    new Vue({
+        el: "#app",
+        data: {
+            show: false,//键值对类型class
+            isred: false,
+            isC: true,
+            clsobj: {//对象类型class
+                redBorder: false,
+                boxShadow: true
+            },//clsA/clsB为数组类型class
+            clsA: "classA",
+            clsB: "classB",
+
+            fontSize: 12,
+            activeColor: "#ccc",
+
+            styleObj: {
+                color: "#e78170",
+                "font-weight": "bolder",
+                "background-color": "#fff",
+                transform:"rotate(7deg)"
+            },
+            styleA: {
+                color: "red"
+            },
+            styleB: {
+                "background-color":"#fff"
+            }
+    },
+        computed: {
+            classObj: function() {//绑定返回对象的计算属性
+                return {
+                    "classC": "true",
+                    red: !this.clsobj.redBorder && this.clsobj.boxShadow
+                }
+            }
+        },
+        methods: {
+            changeClass: function(){
+                this.show = true;
+                this.isred = true;
+                this.clsA = "classB";
+                this.clsobj.redBorder = true;
+
+                this.isC = true;
+                this.clsA = "classA";//数组语法域对象语法混用时候，对象为true，但如果要保留数组样式的clsA，需要重定义clsA,才能使得clsA有效
+            },
+            changeStyle: function() {
+                this.activeColor = "red";
+                this.fontSize = 22;
+
+                this.styleObj["background-color"] = "#de533a";
+            }
+        }
+    })
+</script>
+</html>

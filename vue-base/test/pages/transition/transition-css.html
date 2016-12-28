@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>transition-css过渡</title>
+</head>
+<style>
+    .slide-fade-enter-active{
+        transition: all .3s ease;
+    }
+    .slide-fade-leave-active{
+        transition: all .8s cubic-bezier(1.0,0.5,0.8,1);
+    }
+    .slide-fade-enter,.slide-fade-leave-active{
+        padding-left: 10px;
+        opacity: 0;
+    }
+</style>
+<body>
+<div id="app">
+    <button @click="ifShow">toggle</button>
+    <transition name="slide-fade">
+        <p v-if="show">HELLO</p>
+    </transition>
+</div>
+</body>
+<script src="../../lib/vue2.1.3.js"></script>
+<script>
+    var vm = new Vue({
+        el: "#app",
+        data: {
+            show: true
+        },
+        methods: {
+            ifShow: function() {
+                this.show = !this.show;
+            }
+        }
+    })
+
+</script>
+</html>

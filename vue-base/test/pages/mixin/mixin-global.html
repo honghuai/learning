@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>全局混合</title>
+</head>
+<body>
+<div id="app">
+    <p>{{msg}}</p>
+</div>
+</body>
+<script src="../../lib/vue2.1.3.js"></script>
+<script>
+Vue.mixin({
+    created: function () {
+        var myOption = this.$options.myOption;
+        if(myOption) {
+            console.log(myOption);
+        }
+    }
+})
+    new Vue({
+        el: "#app",
+        myOption: "hi,good night~",
+        data: {
+            msg: "this is message"
+        }
+    })
+</script>
+</html>

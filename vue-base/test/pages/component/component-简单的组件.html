@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>父子组件</title>
+</head>
+<body>
+<div id="app">
+    <my-component></my-component>
+</div>
+</body>
+<script src="../../lib/vue2.1.3.js"></script>
+<script>
+    var Child = {
+        template: '<div>this is my custom component!</div>'
+    }
+    new Vue({
+        el: "#app",
+        components: {
+            "my-component": Child // <my-component> 将只在父模板可用
+        }
+    })
+</script>
+</html>

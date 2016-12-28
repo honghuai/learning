@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>列表的渐进过渡</title>
+</head>
+<body>
+<div id="app">
+    <input type="text" v-model="query">
+    <transition-group
+    tag="ul"
+    name="staggered-fade"
+    :css="false"
+    @before-enter="beforeEnter"
+    @enter="enter"
+    @leave="leave"
+    >
+        <li v-for="(item,index) in items" :key="item.msg" :data-index="index">
+            {{index}}-{{item.msg}}
+        </li>
+    </transition-group>
+
+</div>
+</body>
+<script src="../../lib/vue2.1.3.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.2.3/velocity.min.js"></script>
+<script>
+    /**
+     * 疑惑：不知道为什么要在transition-group的li标签处加  :data-index="index"
+     * 通过 data 属性与 JavaScript 通信 ，就可以实现列表的渐进过渡
+     * */
+new Vue({
+    el: "#app",
+    data: {
+        query: "",
+        list: [{
+            msg: "apple"
+        },{
+            msg: "banana"
+        },{
+            msg: "pear"
+        },{
+            msg: "juice"
+        }]
+    },
+    computed: {
+        items: function() {
+            var vm = this;
+            return this.list.filter(function(item) {
+                return item.msg.toLowerCase().indexOf(vm.query.toLowerCase()) !== -1;
+            })
+        }
+
+    },
+    methods: {
+        beforeEnter: function(el) {
+            el.style.opacity = 0;
+            el.style.height = 0;
+        },
+        enter: function(el,done) {
+            var delay = el.dataset.index *150;
+            setTimeout(function() {
+                Velocity(el,{
+                    opacity: 1,
+                    height: "1.6em"
+                },{
+                    complete: done
+                },delay);
+            })
+        },
+        leave: function(el,done){
+            var delay = el.dataset.index * 150;
+            setTimeout(function() {
+                Velocity(el,{
+                    opacity: 0,
+                    height: 0
+                },{
+                    complete: done
+                })
+            },delay)
+        }
+    }
+})
+</script>
+</html>

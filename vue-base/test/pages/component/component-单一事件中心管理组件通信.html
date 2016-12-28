@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>单一事件中心管理组件通信</title>
+</head>
+<body>
+<div id="app">
+    <com-A></com-A>
+    <com-B></com-B>
+    <com-C></com-C>
+</div>
+</body>
+<script src="../../lib/vue2.1.3.js"></script>
+<script>
+    /**
+     *  const Event = new Vue();
+     *  Event.$emit(事件名称,参数)
+     *  Event.$on(事件名称,function(){}.bind(this))
+     * */
+    const Event = new Vue();
+    const A = {
+        template:`
+            <div>
+                <p>this is A->{{a}}</p>
+                <button @click="aToc">传a值给c</button>
+            </div>
+        `,
+        data(){
+            return {
+                a: 'from component a'
+            }
+
+        },
+        methods: {
+            aToc(){
+                Event.$emit('msg-a',this.a)
+            }
+        }
+    }
+    const B = {
+        template:`
+            <div>
+                <p>this is B->{{a}}</p>
+                <button @click="bToc">传b值给c</button>
+            </div>
+        `,
+        data(){
+            return {
+                a: 'from component b'
+            }
+
+        },
+        methods: {
+            bToc(){
+                Event.$emit('msg-b',this.a)
+            }
+        }
+    }
+    const C = {
+        template:`
+            <div>
+                <p>this is C->{{a}}</p>
+                <div>接收过来的A数据：{{a}}</div>
+                <div>接收过来的A数据：{{b}}</div>
+            </div>
+        `,
+        data(){
+            return {
+                a: 'xx',
+                b: 'yy'
+            }
+
+        },
+        mounted(){
+//            var _this = this;
+            Event.$on('msg-a',function(v) {
+              console.log(v);
+              this.a = v;
+          }.bind(this));
+            Event.$on('msg-b',function(v) {
+              console.log(v);
+              this.b = v;
+          }.bind(this));
+        }
+    }
+    new Vue({
+        el: '#app',
+        components: {
+            'comA': A,
+            'comB': B,
+            'comC': C,
+        }
+    })
+</script>
+</html>

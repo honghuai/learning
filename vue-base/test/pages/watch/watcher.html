@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>状态动画与watcher</title>
+</head>
+<body>
+<div id="app">
+    <input type="number" v-model.number="num" step="20">
+    <p>{{count}}</p>
+    <div>
+        <button @click="changeIt">触发</button>
+        <p>reustl: {{changeNum.a}}+{{changeNum.b}}</p>
+    </div>
+</div>
+</body>
+<script src="../../lib/vue2.1.3.js"></script>
+<script src="https://unpkg.com/tween.js@16.3.4"></script>
+<script>
+var vm = new Vue({
+    el: "#app",
+    data: {
+        count: 0,
+        num: 0,
+        msg: "this is message",
+        changeNum: {
+            a:1,
+            b:2
+        }
+    },
+    methods: {
+        changeIt: function() {
+            this.changeNum.a = 11;
+        }
+    },
+    watch: {
+        num: function(newV,oldV) {
+            var vm = this;
+            function animate(time) {
+                requestAnimationFrame(animate);
+                TWEEN.update(time);
+            }
+            new TWEEN.Tween({
+                tweeningNumber: oldV
+            })
+                    .easing(TWEEN.Easing.Quadratic.Out)
+                    .to({tweeningNumber:newV},500)
+                    .onUpdate(function() {
+                        vm.count = this.tweeningNumber.toFixed(0)
+                    })
+                    .start();
+            animate();
+
+        }
+    }
+})
+    vm.$watch(
+            function () {
+                return this.changeNum.a + this.changeNum.b;
+            },
+            function (newV,oldV) {
+                console.log(newV,oldV);//13 3
+            }
+    )
+</script>
+</html>

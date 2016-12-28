@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>form表单操作</title>
+</head>
+<style>
+    .btn{
+        color: #fff;
+        background-color: #5cb85c;
+        border-color: #4cae4c;
+        display: inline-block;
+        padding: 6px 12px;
+        margin-bottom: 0;
+        font-size: 14px;
+        font-weight: 400;
+        line-height: 1.42857143;
+        text-align: center;
+        white-space: nowrap;
+        vertical-align: middle;
+        -ms-touch-action: manipulation;
+        touch-action: manipulation;
+        cursor: pointer;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        background-image: none;
+        border: 1px solid transparent;
+        border-radius: 4px;
+    }
+</style>
+<body>
+<div action="" id="app">
+    <!--text-->
+    <div>
+        <h4>v-model="msg"</h4>
+       <p>
+           <input type="text" v-model="msg" debounce=2000>
+           {{msg}}
+       </p>
+
+        <h4>v-model.lazy="msg_lazy"。在 "change" 而不是 "input" 事件中更新</h4>
+        <p>
+            <input type="text" v-model.lazy="msg_lazy">
+            {{msg_lazy}}
+        </p>
+
+        <h4>v-model.number="msg_number"。如果想自动将用户的输入值转为 Number 类型（如果原值的转换结果为 NaN 则返回原值），可以添加一个修饰符 number 给 v-model 来处理输入值。这通常很有用，因为在 type="number" 时 HTML 中输入的值也总是会返回字符串类型。</h4>
+        <p>
+            <input type="number" v-model.number="msg_number">
+            {{msg_number}}
+        </p>
+
+        <h4>v-model.trim="msg_lazy"。如果要自动过滤用户输入的首尾空格，可以添加 trim 修饰符到 v-model 上过滤输入</h4>
+        <p>
+            <input type="text" v-model.trim="msg">
+            {{msg}}
+        </p>
+    </div>
+    <!--textarea-->
+    <textarea name="" v-model="myTextarea" id="" cols="30" rows="10"></textarea>
+    <p>{{myTextarea}}</p>
+    <!--checkbox-->
+    <p>
+        <input type="checkbox" v-model="ifchecked">
+        {{ifchecked ? "yes" : "no"}}
+    </p>
+
+    <div>
+        <label for="c1">星期一</label>
+        <input id="c1" type="checkbox" value="Mon." v-model="today">
+        <label for="c2">星期二</label>
+        <input id="c2" type="checkbox" value="Tue." v-model="today">
+        <label for="c3">星期三</label>
+        <input id="c3" type="checkbox" value="Wed." v-model="today">
+
+    </div>
+    <!--radio buttons-->
+
+    <p>
+        <input type="radio" name="picked1" value="one" v-model="picked"> one
+        <br/>
+        <input type="radio" name="picked2" value="two" v-model="picked"> two
+        <br/>
+        结果是： {{picked}}
+    </p>
+
+    <p>
+        <label for="picked_hobby">
+            <input type="radio" id="picked_hobby" value="羽毛球" v-model="picked_hobby"> 羽毛球
+        </label>
+        <label for="picked_hobby2">
+            <input type="radio" id="picked_hobby2" value="乒乒球" v-model="picked_hobby"> 乒乒球
+        </label>
+
+        <br/>
+        结果是： {{picked_hobby}}
+    </p>
+
+    <!--select-->
+    <p>
+        <select v-model="select">
+            <option>one</option>
+            <option>two</option>
+            <option>three</option>
+        </select>
+        单选下拉select：{{select}}
+    </p>
+
+    <p>
+        <select v-model="multiSelect" multiple>
+            <option>one</option>
+            <option>two</option>
+            <option>three</option>
+        </select>
+        multiSelect:{{multiSelect}}
+    </p>
+
+    <!--绑定表达式-->
+    <h3>复选框：</h3>
+    <input type="checkbox" v-model="toggle.f1" true-value="a" false-value="b">
+    <input type="checkbox" v-model="toggle.f2" true-value="a2" false-value="b2">
+
+    <br/>
+    <label for="tp1">
+        <input id="tp1" type="radio" v-model="toggle_pick" value="aa"> 鞋子
+    </label>
+    <label for="tp2">
+        <input id="tp2" type="radio" v-model="toggle_pick" value="bb"> 柜子
+    </label>
+    <br/>
+
+    <select v-model="selectedmodel" @change="changeMySelect">
+        <option v-for="options in selecteOptions" :value="options.value">{{options.text}}</option>
+    </select>
+    <span>selectedmodel: {{selectedmodel}}</span>
+
+<h3>选项组：</h3>
+    <span>selectgroup: {{selectgroup}}</span>
+
+    <select v-model="selectgroup">
+        <optgroup v-for="lists in selectedgroupOptions" :label="lists.label">
+            <option v-for="list in lists.options" :value="list.value">{{list.text}}</option>
+        </optgroup>
+    </select>
+
+    <p>
+        <pre>data: {{$data}}
+        </pre>
+    </p>
+    <a class="btn" @click="getResult" @dblclick="getAllResult">看结果</a>
+
+
+
+
+</div>
+</body>
+<script src="../lib/vue2.1.3.js"></script>
+<script>
+    /**
+     * 疑惑：
+     * input加入lazy属性表示在change而不是input事件出发后进行同步，实验不成功
+     * input加入number属性表示输入值自动转换为数字，实验不成功
+     * input的debounce属性，watch也实验不成功
+     * select遍历的是自定义的过滤器extract实验不成功
+     * */
+var vm = new Vue({
+    el: "#app",
+    data: {
+        today: [],
+        msg: "this is message",
+        msg_lazy: "this is message2",
+        msg_number: "this is message3",
+        myTextarea: "this is myTextarea",
+        ifchecked: true,
+        picked: "two",
+        picked_hobby: "羽毛球",
+        select: "two",
+        multiSelect: ["one","two"],
+        toggle: {f1: "a",f2: "b2"},
+        toggle_pick: "aa",
+        selectedmodel: "valueA",
+        selecteOptions: [{
+            text: "textA",
+            value: "valueA"
+        },{
+            text: "textB",
+            value: "valueB"
+        }],
+        selectgroup: "valueAA-2",
+        selectedgroupOptions: [
+            {
+                label: "AA",
+                options: [{
+                    text: "textAA-1",
+                    value: "valueAA-1"
+                },{
+                    text: "textAA-2",
+                    value: "valueAA-2"
+                }]
+            },{
+                label: "BB",
+                options: [{
+                    text: "textBB-1",
+                    value: "valueBB-1"
+                },{
+                    text: "textBB-2",
+                    value: "valueBB-2"
+                }]
+            }
+        ]
+    },
+        watch: {
+            msg: function(val,oldVal){
+                console.log("旧："+val+"  新："+oldVal);
+            }
+        },
+    methods: {
+        getResult: function() {
+            /*checkbox*/
+            this.ifchecked = !this.ifchecked;
+            console.log(this.ifchecked);
+
+            /*radios*/
+            this.picked = this.picked === "one" ? "two" : "one";
+            console.log(this.picked);
+
+            this.picked_hobby = "乒乒球";
+
+            /*select*/
+//            this.multiSelect = "one";
+            console.log(this.select);
+            console.log(this.multiSelect);
+//            this.selectedmodel = "valueB";
+
+            /*复选框*/
+            this.getAllResult();
+        },
+        getAllResult: function() {
+            console.log("输入框的值为：");
+            console.log(this.msg);
+            console.log("checkbox勾选判定结果为：");
+            console.log(this.ifchecked);
+
+            console.log("checkbox复选框 的勾选判定结果为：");
+            console.log(this.today);
+            console.log("radios的选择项为：");
+            console.log(this.picked);
+            console.log(this.picked_hobby);
+            console.log("select下拉选择的值为：");
+            console.log(this.multiSelect);
+            console.log("表达式-复选框checkbox的值为：");
+            console.log(this.toggle);
+
+            console.log("表达式-单选框radio的值为：");
+            console.log(this.toggle_pick);
+
+            console.log("表达式-下拉框select的值为：");
+            console.log(this.selectedmodel);
+        },
+        changeMySelect: function() {
+            console.log(this.selectedmodel);
+        }
+    }
+})
+
+    Vue.filter("extract",function(value,keyToExtract) {
+        return value.map(function(i){
+            return i[keyToExtract];
+        })
+    })
+</script>
+</html>

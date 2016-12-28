@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>父子组件</title>
+</head>
+<body>
+<div id="app">
+    <input type="text" v-model="answer">
+    <my-component title="honghuai"  pare-ntInFo="who like u" :answer="answer" @sayMe="sayMe1"></my-component>
+    <p>------</p>
+    <my-component just-number="1"></my-component>
+    <p>------</p>
+    <my-component :just-number="123"></my-component>
+
+</div>
+<template id="J_info">
+    <div>
+        <div @click="getCount">{{msg}}:{{count}}</div>
+        <span v-for="list in lists">{{list}}-</span>
+        <h3>{{title}}</h3>
+        <h3>{{pareNtinfo}}? the answer is :{{answer}}</h3>
+        <P>字符串(1)/数字类型(123)={{typeof this.justNumber}}：{{justNumber}}</P>
+        <button @click="sayWho">触发</button>
+
+    </div>
+
+</template>
+</body>
+<script src="../../lib/vue2.1.3.js"></script>
+<script>
+
+    /**
+     * HTML 特性不区分大小写。当使用非字符串模版时，prop的名字形式会从 camelCase 转为 kebab-case（短横线隔开）：
+     * 疑惑：如果使用字符串模版，不用在意这些限制，
+     *字面量语法vs动态语法
+     *字符串的1：just-number="1"
+     * 数字类型的1：:just-number="1"
+     *如果想传递一个实际的 JavaScript 数字，需要使用 v-bind
+     *
+     * */
+    Vue.component("my-component", {
+        template: '#J_info',
+        /*template: '<div>'+
+        '<div @click="getCount">{{msg}}:{{count}}</div>'+
+                '<span v-for="list in lists">{{list}}-</span>'+
+                '<h3>{{title}}</h3>'+
+                '<h3>{{pareNtinfo}}? the answer is :{{answer}}</h3>'+
+                '<button @click="sayWho">触发</button>'+
+
+            '</div>',*/
+        /*data: {//错误写法，data必须是函数
+         msg: "hello"
+         }*/
+        data: function () {
+            return {
+                msg: "hello",
+                count: 1,
+                lists: [11,22,33]
+            }
+        },
+        props: ["title","pareNtinfo","answer","justNumber"],
+        methods: {
+            getCount: function () {
+                this.count++;
+            },
+            sayWho: function() {
+                /**
+                 * prop 是单向绑定的：当父组件的属性变化时，将传导给子组件，但是不会反过来。这是为了防止子组件无意修改了父组件的状态——这会让应用的数据流难以理解。
+
+                 另外，每次父组件更新时，子组件的所有 prop 都会更新为最新值。这意味着你不应该在子组件内部改变 prop 。如果你这么做了，Vue 会在控制台给出警告。
+                 */
+                this.answer = 123;
+                console.log(typeof this.justNumber);
+                this.$emit("sayme");//注意虽然上面的my-component标签存在大写，但下面的js必须都小写。因为HTML 特性不区分大小写
+            }
+
+        }
+    })
+    new Vue({
+        el: "#app",
+        data: {
+            answer: "everyone"
+        },
+        methods: {
+            sayMe1: function() {
+                alert("在说我");
+                this.answer = "it's me";
+            }
+        }
+    })
+</script>
+</html>

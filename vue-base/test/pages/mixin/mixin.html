@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>混合</title>
+</head>
+<body>
+<div id="app">
+<my-component></my-component>
+</div>
+</body>
+<script src="../../lib/vue2.1.3.js"></script>
+<script>
+    /**
+     *混合对象的钩子 将在组件自身钩子之前调用
+     * 同名选项则会以恰当的方式混合：具体需测试，测试过如果下面都是hello方法，则会以最后一次hello为准
+     * */
+    var myMixin = {// 定义一个混合对象
+        created: function() {
+            this.hello();
+        },
+        methods: {
+            hello: function() {
+                console.log("hello from mixin~");
+            }
+        }
+    }
+    var myMixin2 = {// 定义一个混合对象
+        created: function() {
+            this.hello2();
+        },
+        methods: {
+            hello2: function() {
+                console.log("hello from mixin2~");
+            }
+        }
+    }
+    var Component = Vue.extend({// 定义一个使用混合对象的组件
+        mixins: [myMixin,myMixin2],
+        data: function(){
+            return {
+                msg: "this is message"
+            }
+        },
+        template: '<div>信息提示-{{msg}}' +
+        '   <button @click="changeIt">触发</button>' +
+        '   <button @click="hello2">触发混合对象中的methods方法</button>' +
+        '</div>',
+        methods: {
+            changeIt: function() {//如果此处的方法为上述混合对象中的hello2则会以此处的方法为准，混合对象中的方法会被无视
+                this.msg = "你触发了点击事件";
+                console.log("你触发了点击事件");
+            }
+        }
+    })
+//    var component = new Component();
+
+   /* Vue.component("my-component",{
+        template: '<div>xxx</div>'
+    })*/
+    new Vue({
+        el: "#app",
+        mixins: [myMixin],
+        created: function() {
+          console.log("组件钩子created执行");
+        },
+        components: {
+            "my-component": Component
+        }
+    })
+</script>
+</html>

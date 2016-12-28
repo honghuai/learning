@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>text/x-template</title>
+</head>
+<body>
+<div id="app">
+    <my-component :hobbys="hobbys"></my-component>
+</div>
+<script type="text/x-template" id="likeSomething">
+    <div>
+        do u like something ,but u never get by yourself.
+        <p v-for="hobbys in hobbys">
+            {{hobbys}}
+        </p>
+    </div>
+</script>
+</body>
+<script src="../lib/vue2.1.3.js"></script>
+<script>
+    /**
+     *另一种定义模板的方式就是在js标签里使用text/x-template类型，并且指定一个id
+     * */
+    new Vue({
+        el: "#app",
+        data: {
+            hobbys: ["football", "fall in love", "swinning"]
+        },
+        components: {
+            "myComponent": {
+                template: "#likeSomething",
+                data: function () {
+                    return {
+//                        hobbys: ["football","fall in love","swinning"]
+                    }
+                },
+                props: ["hobbys"]
+            }
+        }
+    })
+</script>
+</html>

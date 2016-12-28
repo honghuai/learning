@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title> v-bind:disabled="someDynamicCondition</title>
+</head>
+<body>
+<div id="app">
+    <button :clsId="'CLS'+id" :disabled="ifCanChange" v-text="msg"></button>{{ok?'11':msg}}
+    <button @click="ifCan">切换</button>
+</div>
+</body>
+<script src="../lib/vue2.1.3.js"></script>
+<script>
+new Vue({
+    el: "#app",
+    data: {
+        msg: "这是要切换显示的内容",
+        ifCanChange: false,
+        id: 123,
+        ok: 0
+    },
+    methods: {
+        ifCan: function() {
+            this.ifCanChange = !this.ifCanChange;
+        }
+    }
+})
+</script>
+</html>
