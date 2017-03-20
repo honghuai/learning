@@ -2,7 +2,7 @@
 
 ### 一、介绍
 
-<img style="height:230px" src="https://yarnpkg.com/assets/feature-speed.png">
+<div align="center"><img height=230 src="https://yarnpkg.com/assets/feature-speed.png"></div>
 
 #### yarn是一个更快、更可靠、更安全的，在开发上可作为npm替代品的包管理器。
 
@@ -38,8 +38,6 @@
 * 方法1：安装对应系统版本的[.msi文件](https://yarnpkg.com/zh-Hans/docs/install#windows-tab)
 * 方法2：从[Node.js官网](https://nodejs.org/en/)下载对应平台的安装程序，接着安装Node.js的包管理工具npm,最后在控制台运行指令：`npm install yarn -g` 
 
-
-
  	如果遇到下载node、安装npm依赖文件比较慢，可以移步[淘宝NPM镜像](http://npm.taobao.org/)； 运行指令测试yarn是否安装：`yarn --version`, 另外使用cnpm命令行工具代替默认的npm，即 `npm install -g cnpm --registry=https://registry.npm.taobao.org`，可以直接运行指令：`cnpm install yarn -g`
 
 ### 三、使用
@@ -51,9 +49,9 @@
 
  `yarn` 或 `yarn install` 
 
->如果直接执行不带命令的yarn指令，将会执行`yarn install`。
+如果直接执行不带命令的yarn指令，将会执行`yarn install`。  
 
->依赖关系解析：yarn在解析package.json文件过程中，产生yarn.lock文件，用于记录安装的所有软件包的 **具体版本号**,进而安装package.json列表中所有的依赖文件到当前路径下的node_modules文件夹
+依赖关系解析：yarn在解析package.json文件过程中，产生yarn.lock文件，用于记录安装的所有软件包的 **具体版本号**,进而安装package.json列表中所有的依赖文件到当前路径下的node_modules文件夹
 
  `yarn add <package...>` 安装到 **dependencies** 中。相当于`npm install <package...> --save`
 
@@ -65,9 +63,9 @@
 
  `yarn add [package-name@tag]` 安装特定 tag 的包，如(e.g. **beta** , **next**, or **latest**)
 
- **dependencies 与 devDependencies 的差别：  
+ dependencies 与 devDependencies 的差别：  
  dependencies 是运行代码需要的依赖，如es6-promise、axios、react、jQuery；  
- devDependencies 是在开发工作流的一些地方需要的依赖，但在运行时不需要，如Babel转码。下面是官方英文介绍(个人觉得英文读起来更容易理解)：**
+ devDependencies 是在开发工作流的一些地方需要的依赖，但在运行时不需要，如Babel转码。下面是官方英文介绍(个人觉得英文读起来更容易理解)：
 >  dependencies are your normal dependencies, or rather ones that you need when running your code (e.g. React or ImmutableJS).  
 devDependencies are your development dependencies. Dependencies that you need at some point in the development workflow but not while running your code (e.g. Babel or Flow).
 
