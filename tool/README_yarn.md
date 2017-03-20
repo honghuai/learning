@@ -42,7 +42,7 @@
 
 
 
- 	如果遇到下载node、安装npm依赖文件，可以移步[淘宝NPM镜像](http://npm.taobao.org/), 运行指令测试yarn是否安装：`yarn --version`, 另外使用cnpm命令行工具代替默认的npm，即 `npm install -g cnpm --registry=https://registry.npm.taobao.org`，可以直接运行指令：`cnpm install yarn -g`
+ 	如果遇到下载node、安装npm依赖文件比较慢，可以移步[淘宝NPM镜像](http://npm.taobao.org/)； 运行指令测试yarn是否安装：`yarn --version`, 另外使用cnpm命令行工具代替默认的npm，即 `npm install -g cnpm --registry=https://registry.npm.taobao.org`，可以直接运行指令：`cnpm install yarn -g`
 
 ### 三、使用
 1.初始化包的开发环境，会跳过交互式会话(如name/description/git repository等)，根据默认值直接生成 **package.json** 文件
