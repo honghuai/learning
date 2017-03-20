@@ -6,11 +6,9 @@
 
 #### yarn是一个更快、更可靠、更安全的，在开发上可作为npm替代品的包管理器。
 
->	Yarn is a new JavaScript package manager built by Facebook, Google, Exponent and Tilde. As can be read in the official announcement, its purpose is to solve a handful of problems that these teams faced with npm, namely:
-
->	1.installing packages wasn’t fast/consistent enough
-
->	2.there were security concerns, as npm allows packages to run code on installation.
+>	Yarn is a new JavaScript package manager built by Facebook, Google, Exponent and Tilde. As can be read in the official announcement, its purpose is to solve a handful of problems that these teams faced with npm, namely:  
+1.installing packages wasn’t fast/consistent enough  
+2.there were security concerns, as npm allows packages to run code on installation.
  
 
 
@@ -67,11 +65,11 @@
 
  `yarn add [package-name@tag]` 安装特定 tag 的包，如(e.g. **beta** , **next**, or **latest**)
 
-####  dependencies 与 devDependencies 的差别：dependencies 是运行代码需要的依赖，如es6-promise、axios、react、jQuery；devDependencies 是在开发工作流的一些地方需要的依赖，但在运行时不需要，如Babel转码。下面是官方英文介绍(个人觉得英文读起来更容易理解)：
-
->  dependencies are your normal dependencies, or rather ones that you need when running your code (e.g. React or ImmutableJS).
-
->devDependencies are your development dependencies. Dependencies that you need at some point in the development workflow but not while running your code (e.g. Babel or Flow).
+ **dependencies 与 devDependencies 的差别：  
+ dependencies 是运行代码需要的依赖，如es6-promise、axios、react、jQuery；  
+ devDependencies 是在开发工作流的一些地方需要的依赖，但在运行时不需要，如Babel转码。下面是官方英文介绍(个人觉得英文读起来更容易理解)：**
+>  dependencies are your normal dependencies, or rather ones that you need when running your code (e.g. React or ImmutableJS).  
+devDependencies are your development dependencies. Dependencies that you need at some point in the development workflow but not while running your code (e.g. Babel or Flow).
 
 3.删除依赖
 
