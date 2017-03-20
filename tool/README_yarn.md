@@ -1,6 +1,5 @@
-yarn - 包管理器
-
-----
+## yarn - 包管理器
+--
 
 ### 一、介绍
 
@@ -10,9 +9,9 @@ yarn - 包管理器
 
 >	Yarn is a new JavaScript package manager built by Facebook, Google, Exponent and Tilde. As can be read in the official announcement, its purpose is to solve a handful of problems that these teams faced with npm, namely:
 
->	1.installing packages wasn’t fast/consistent enough
+>>	1.installing packages wasn’t fast/consistent enough
 
->	2.there were security concerns, as npm allows packages to run code on installation.
+>>	2.there were security concerns, as npm allows packages to run code on installation.
  
 
 
@@ -24,7 +23,7 @@ yarn - 包管理器
 
 * 确定性(一致性)、扁平模式
 
-安装依赖过程中，yarn.lock文件会用简明的有序键来锁定已安装的文件到指定版本，保证以后在其他机子上安装每一个包的时候，能够在node_modules里都有着完全相同的文件结构。
+	安装依赖过程中，yarn.lock文件会用简明的有序键来锁定已安装的文件到指定版本，保证以后在其他机子上安装每一个包的时候，能够在node_modules里都有着完全相同的文件结构。
 
 	注：解析不匹配的依赖版本为一个单一的版本来避导致免多个版本(比如说项目依赖A,B,C，这三个库分别对xxlib库存在1.1.x,1.2.x,1.2.x版本的依赖，yarn不会‘傻傻的’去下载这三个版本)，每个模块被添加的同时，yarn就会创建/更新yarn.lock文件，保证其他机子也能够安装相同版本的包，以及包含了package.json中定义的一系列允许的版本
 
@@ -43,6 +42,7 @@ yarn - 包管理器
 * 方法2：从[Node.js官网](https://nodejs.org/en/)下载对应平台的安装程序，接着安装Node.js的包管理工具npm,最后在控制台运行指令：`npm install yarn -g` 
 
 --
+
 * 如果遇到下载node、安装npm依赖文件，可以移步[淘宝NPM镜像](http://npm.taobao.org/)
 
 * 运行指令测试yarn是否安装：`yarn --version`
