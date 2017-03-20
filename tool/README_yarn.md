@@ -1,5 +1,4 @@
 ## yarn - 包管理器
---
 
 ### 一、介绍
 
@@ -9,9 +8,9 @@
 
 >	Yarn is a new JavaScript package manager built by Facebook, Google, Exponent and Tilde. As can be read in the official announcement, its purpose is to solve a handful of problems that these teams faced with npm, namely:
 
->>	1.installing packages wasn’t fast/consistent enough
+>	1.installing packages wasn’t fast/consistent enough
 
->>	2.there were security concerns, as npm allows packages to run code on installation.
+>	2.there were security concerns, as npm allows packages to run code on installation.
  
 
 
@@ -41,7 +40,7 @@
 * 方法1：安装对应系统版本的[.msi文件](https://yarnpkg.com/zh-Hans/docs/install#windows-tab)
 * 方法2：从[Node.js官网](https://nodejs.org/en/)下载对应平台的安装程序，接着安装Node.js的包管理工具npm,最后在控制台运行指令：`npm install yarn -g` 
 
---
+
 
 * 如果遇到下载node、安装npm依赖文件，可以移步[淘宝NPM镜像](http://npm.taobao.org/)
 
@@ -52,7 +51,7 @@
 ### 三、使用
 1.初始化包的开发环境，会跳过交互式会话(如name/description/git repository等)，根据默认值直接生成 **package.json** 文件
 
-`yarn init -y`或`yarn init --yes` 
+<code>yarn init -y</code>或`yarn init --yes` 
 
 2.安装依赖
 
