@@ -73,7 +73,7 @@ devDependencies are your development dependencies. Dependencies that you need at
 
 4.更新依赖、查看版本号
 
-`yarn outdated` 可查看当前package.json文件中依赖的包的当前版本、语意化的版本号 (semantic versioning, [semver](http://semver.org/))，以及最新有效的版本。相当于`npm outdated`
+`yarn outdated` 可查看当前package.json文件中依赖的包的当前版本、语意化的版本号 (semantic versioning, [semver](http://semver.org/))，以及最新有效的版本，关于 **^**/ **~**/ **1.x**等版本具体意义[点此处查看](https://github.com/npm/node-semver) 。相当于`npm outdated`
 
 `yarn outdated <package...>` 查看当前package.json文件中当前命令行中的包所依赖的版本
 
