@@ -130,7 +130,8 @@ devDependencies are your development dependencies. Dependencies that you need at
 
 `yarn config list` 
 
-`yarn config set registry “https://registry.npm.taobao.org”` 为了快速安装包，一般会将yarn默认的安装源 `https://registry.npm.taobao.org`指向淘宝镜像源。
+`yarn config set registry “https://registry.npm.taobao.org”` 为了快速安装包，一般会将yarn默认的安装源指向淘宝镜像源 `https://registry.npm.taobao.org`。相当于npm安装采用淘宝仓库所进行的配置`npm config set registry https://registry.npm.taobao.org 
+`。
 
 相当于对yarn配置的object进行 **set** 赋值、 **get** 取值、 **delete** 删除、 **list** 查看。yarn config list内容如下：
 
