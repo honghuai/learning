@@ -169,6 +169,10 @@ devDependencies are your development dependencies. Dependencies that you need at
   		dependencies:
     		lodash "4.15.0"
     		vue "2.0"
+		
+8.`yarn list ` <package...> 查看当前目录下已安装的node包注意事项
+
+如果没有安装过则会显示:warning xxx: No license field。如果安装过则会显示相关信息，包括版本号，如显示：axios@0.16.1
 
 ---
 
